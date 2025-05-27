@@ -1,10 +1,15 @@
 {
+  "homepage": "https://santhiyamurugavel28.github.io/healthcare-dashboard",
   "name": "healthcare-dashboard",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "vite",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "vite",
+    "test": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

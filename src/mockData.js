@@ -4,29 +4,13 @@ export const userData = {
   avatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100'
 };
 
-export const healthStatus = [
-  {
-    id: 'lungs',
-    name: 'Lungs',
-    status: 'warning',
-    date: '26 Oct 2021',
-    icon: '🫁'
-  },
-  {
-    id: 'teeth',
-    name: 'Teeth',
-    status: 'good',
-    date: '26 Oct 2021',
-    icon: '🦷'
-  },
-  {
-    id: 'bone',
-    name: 'Bone',
-    status: 'warning',
-    date: '26 Oct 2021',
-    icon: '🦴'
-  }
+export const healthIndicators = [
+  { title: 'Lungs', date: '26 Oct 2021', color: 'bg-red-500', progress: 75 },
+  { title: 'Teeth', date: '26 Oct 2021', color: 'bg-teal-400', progress: 75 },
+  { title: 'Bone', date: '26 Oct 2021', color: 'bg-orange-300', progress: 75 }
 ];
+
+export const weekDays = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
 
 export const anatomyIndicators = [
   {
@@ -46,33 +30,33 @@ export const anatomyIndicators = [
 ];
 
 export const calendarData = {
-  month: 'October 2021',
-  days: [
-    { day: 'Mon', date: 25, appointments: ['10:00', '11:00', '12:00'] },
-    { day: 'Tues', date: 26, appointments: ['08:00', '09:00', '10:00'] },
-    { day: 'Wed', date: 27, appointments: ['12:00', '13:00'] },
-    { day: 'Thurs', date: 28, appointments: ['10:00', '11:00'] },
-    { day: 'Fri', date: 29, appointments: ['14:00', '15:00', '16:00'] },
-    { day: 'Sat', date: 30, appointments: ['12:00', '14:00', '15:00'] },
-    { day: 'Sun', date: 31, appointments: ['09:00', '10:00', '11:00'] }
-  ],
-  appointments: [
-    {
-      id: 1,
-      title: 'Dentist',
-      time: '09:00-11:00',
-      doctor: 'Dr. Cameron Williamson',
-      icon: '🦷'
-    },
-    {
-      id: 2,
-      title: 'Physiotherapy Appointment',
-      time: '11:00-12:00',
-      doctor: 'Dr. Kevin Djones',
-      icon: '🧑‍⚕️'
-    }
-  ]
+  25: ['10:00', '11:00', '12:00'],
+  26: ['08:00', '09:00', '10:00'],
+  27: ['12:00','---', '13:00'],
+  28: ['10:00', '11:00','---'],
+  29: ['---','14:00', '16:00'],
+  30: ['12:00', '14:00', '15:00'],
+  31: ['09:00', '10:00', '11:00']
 };
+
+export const appointments = [
+  {
+    title: 'Dentist',
+    time: '09:00-11:00',
+    doctor: 'Dr. Cameron Williamson',
+    icon: '🦷',
+    bgColor: 'bg-indigo-700',
+    textColor: 'text-white'
+  },
+  {
+    title: 'Physiotherapy Appointment',
+    time: '11:00-12:00',
+    doctor: 'Dr. Kevin Djones',
+    icon: '💪🏻',
+    bgColor: 'bg-indigo-50',
+    textColor: 'text-indigo-900'
+  }
+];
 
 export const upcomingSchedule = {
   days: [

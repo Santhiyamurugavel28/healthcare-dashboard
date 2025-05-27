@@ -1,86 +1,70 @@
 import React from 'react';
-import { calendarData } from '../../mockData';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { weekDays } from '../../mockData';
 
-function CalendarView() {
+export function CalendarView() {
+  const dates = [25, 26, 27, 28, 29, 30, 31];
+  const dailySchedule = {
+    25: ['10:00', '11:00', '12:00'],
+    26: ['08:00', '09:00', '10:00'],
+    27: ['12:00','---', '13:00'],
+    28: ['10:00', '11:00','---'],
+    29: ['---','14:00', '16:00'],
+    30: ['12:00', '14:00', '15:00'],
+    31: ['09:00', '10:00', '11:00']
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-sm p-5">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex space-x-4 items-center">
-          <div className="text-gray-800 font-medium">
-            {calendarData.month}
-          </div>
-          <div className="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-md">
-            This Week
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-lg font-semibold">October 2021</h2>
+          <p className="text-sm text-gray-500"></p>
+        </div>
+        <div className="flex items-center gap-0">
+          <div className="flex gap-0">
+            <button className="p-2 rounded-lg text-indigo-800 text-3xl">←</button>
+            <button className="p-2 rounded-lg text-indigo-800 text-3xl">→</button>
           </div>
         </div>
-        <div className="flex space-x-2">
-          <button className="p-1.5 rounded-md text-gray-500 hover:bg-gray-100 transition-colors">
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button className="p-1.5 rounded-md text-gray-500 hover:bg-gray-100 transition-colors">
-            <ChevronRight className="h-5 w-5" />
-          </button>
+      </div>
+
+      <div className="mb-6">
+        <div className="grid grid-cols-7 mb-2">
+          {weekDays.map((day) => (
+            <div key={day} className="text-sm text-indigo-800 text-center font-semibold">
+              {day}
+            </div>
+          ))}
         </div>
-      </div>
-      
-      <div className="grid grid-cols-7 gap-2 mb-4">
-        {calendarData.days.map((day) => (
-          <div key={day.day} className="text-center">
-            <div className="text-xs text-gray-500 mb-1">{day.day}</div>
-            <div className={`text-lg font-medium mb-2 ${
-              day.day === 'Thurs' ? 'text-indigo-600' : 'text-gray-800'
-            }`}>{day.date}</div>
-            
-            <div className="space-y-1.5">
-              {day.appointments.map((time, idx) => (
-                <div 
-                  key={`${day.day}-${idx}`}
-                  className={`text-xs py-1 px-1 rounded ${
-                    idx === 0 && day.day === 'Thurs' 
-                      ? 'bg-indigo-600 text-white' 
-                      : idx === 1 && day.day === 'Wed'
-                      ? 'bg-indigo-100 text-indigo-700'
-                      : 'text-gray-500'
-                  }`}
-                >
-                  {time}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      <div className="flex gap-4 mt-6">
-        {calendarData.appointments.map((appointment) => (
-          <div 
-            key={appointment.id}
-            className={`flex-1 rounded-xl p-4 ${
-              appointment.id === 1 
-                ? 'bg-indigo-600 text-white'
-                : 'bg-indigo-100 text-indigo-800'
-            }`}
-          >
-            <div className="flex justify-between mb-2">
-              <div className="font-medium">{appointment.title}</div>
-              <div className="text-xl">{appointment.icon}</div>
-            </div>
-            <div className={`text-sm ${
-              appointment.id === 1 ? 'text-indigo-200' : 'text-indigo-600'
+
+        <div className="grid grid-cols-7">
+          {dates.map((date) => (
+            <div key={date} className={`text-center ${
+              date === 26 ? 'bg-indigo-100 rounded-lg' : ''
             }`}>
-              {appointment.time}
+              <div className={`inline-block px-3 py-1 rounded-lg font-bold ${date === 31 ? 'text-gray-400' : ''}`}>
+                {date}
+              </div>
+              <div className="mt-2 space-y-2">
+                {dailySchedule[date].map((time, index) => (
+                  <div 
+                    key={`${date}-${time}-${index}`} 
+                    className={`text-xs font-semibold mx-2 p-1 rounded-lg ${
+                      date === 26 && time === '09:00' 
+                        ? 'bg-indigo-800 text-white' 
+                        : date === 31 
+                          ? 'text-gray-400' 
+                          : 'text-gray-500'
+                    }`}
+                  >
+                    {time}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className={`text-sm mt-1 ${
-              appointment.id === 1 ? 'text-indigo-200' : 'text-indigo-600'
-            }`}>
-              {appointment.doctor}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-
-export default CalendarView;

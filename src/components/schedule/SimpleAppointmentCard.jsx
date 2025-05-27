@@ -1,17 +1,26 @@
 import React from 'react';
+import { appointments } from '../../mockData';
 
-function SimpleAppointmentCard({ title, time, icon }) {
+export function SimpleAppointmentCard() {
   return (
-    <div className="bg-gray-100 rounded-xl p-4 transition-transform hover:scale-[1.02] duration-300">
-      <div className="flex justify-between items-start">
-        <div>
-          <h3 className="font-medium text-gray-800 mb-1">{title}</h3>
-          <p className="text-gray-500 text-sm">{time}</p>
+    <div className="grid grid-cols-2 gap-4 mb-8">
+    {appointments.map((apt, i) => (
+      <div
+        key={i}
+        className={`p-4 rounded-lg ${apt.bgColor} ${apt.textColor}`}
+      >
+        <div className="flex items-center gap-3 mb-2">    
+                      
+          <div>
+            <div className="font-semibold">{apt.title}</div>
+            <div className="text-sm opacity-80">{apt.time}</div>
+            <div className="text-sm opacity-80">{apt.doctor}</div>
+          </div>
+          <span className="text-xl mb-10">{apt.icon}</span>
         </div>
-        <div className="text-xl">{icon}</div>
+       
       </div>
-    </div>
+    ))}
+  </div>
   );
 }
-
-export default SimpleAppointmentCard;

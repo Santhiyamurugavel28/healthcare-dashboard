@@ -1,6 +1,10 @@
 import { Search, Bell, Plus, Calendar, UserCircle, ArrowRight,ChevronDown } from 'lucide-react';
 import anatomyModel from '../assets/anatomy.png';
 import { Activity } from './activity/ActivityFeed';
+import { HealthStatusCards } from './health/HealthStatusCards';
+import {SimpleAppointmentCard} from './schedule/SimpleAppointmentCard';
+import {UpcomingSchedule} from './schedule/UpComingSchedule';
+import { CalendarView } from './calendar/CalendarView';
 import { useState } from 'react';
 
 export default function Dashboard() {
@@ -40,37 +44,6 @@ export default function Dashboard() {
     29: ['---','14:00', '16:00'],
     30: ['12:00', '14:00', '15:00'],
     31: ['09:00', '10:00', '11:00']
-  };
-
-  const activityData = {
-    'Mon': Array(24).fill().map((_, i) => ({
-      type: i % 3 === 0 ? 'cyan' : i % 3 === 1 ? 'indigo' : 'empty',
-      height: '24px'
-    })),
-    'Tues': Array(24).fill().map((_, i) => ({
-      type: i % 3 === 1 ? 'cyan' : i % 3 === 2 ? 'indigo' : 'empty',
-      height: '24px'
-    })),
-    'Wed': Array(24).fill().map((_, i) => ({
-      type: i % 3 === 2 ? 'cyan' : i % 3 === 0 ? 'indigo' : 'empty',
-      height: '24px'
-    })),
-    'Thurs': Array(24).fill().map((_, i) => ({
-      type: i % 3 === 0 ? 'indigo' : i % 3 === 1 ? 'cyan' : 'empty',
-      height: '24px'
-    })),
-    'Fri': Array(24).fill().map((_, i) => ({
-      type: i % 3 === 1 ? 'indigo' : i % 3 === 2 ? 'cyan' : 'empty',
-      height: '24px'
-    })),
-    'Sat': Array(24).fill().map((_, i) => ({
-      type: i % 3 === 2 ? 'indigo' : i % 3 === 0 ? 'cyan' : 'empty',
-      height: '24px'
-    })),
-    'Sun': Array(24).fill().map((_, i) => ({
-      type: i % 4 === 0 ? 'cyan' : i % 4 === 2 ? 'indigo' : 'empty',
-      height: '24px'
-    }))
   };
 
   const [selectedPart, setSelectedPart] = useState(null);
@@ -141,34 +114,7 @@ export default function Dashboard() {
               </div>
             </div>
             
-            <div className="w-60">
-              {healthIndicators.map((indicator, index) => (
-                <div key={index} className="p-3 mb-2 bg-indigo-50 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      {indicator.title === 'Lungs' && <span className='text-3xl'>🫁</span>}
-                      {indicator.title === 'Teeth' && <span className='text-3xl'>🦷</span>}
-                      {indicator.title === 'Bone' && <span className='text-3xl'>🦴</span>}
-                      <span className="font-semibold">{indicator.title}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="text-sm text-gray-500">Date: {indicator.date}</div>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-gray-200 overflow-hidden w-full">
-                    <div
-                      className={`h-full rounded-full ${indicator.color}`}
-                      style={{ width: `${indicator.progress}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-              <div className="flex justify-end">
-              <button className="text-indigo-600 text-sm flex right-3">
-                      Details <ArrowRight className="w-4  ml-1" />
-                    </button>
-                    </div>
-            </div>
+          <HealthStatusCards />
           </div>
 
           <div className="mt-8">
@@ -177,111 +123,11 @@ export default function Dashboard() {
         </div>
 
         <div>
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-lg font-semibold">October 2021</h2>
-              <p className="text-sm text-gray-500"></p>
-            </div>
-            <div className="flex items-center gap-0">
-              <div className="flex gap-0">
-                <button className="p-2 rounded-lg text-indigo-800 text-3xl">←</button>
-                <button className="p-2 rounded-lg text-indigo-800 text-3xl">→</button>
-              </div>
-            </div>
-          </div>
+          <CalendarView />
 
-          <div className="mb-6">
-            <div className="grid grid-cols-7 mb-2">
-              {weekDays.map((day) => (
-                <div key={day} className="text-sm text-indigo-800 text-center font-semibold">
-                  {day}
-                </div>
-              ))}
-            </div>
+          <SimpleAppointmentCard />
 
-            <div className="grid grid-cols-7">
-              {dates.map((date) => (
-                <div key={date} className={`text-center ${
-                  date === 26 ? 'bg-indigo-100' : ''
-                }`}>
-                  <div className={`inline-block px-3 py-1 rounded-lg font-bold ${date==31 ?'bg-grey-100':'font-bold'}`}>
-                    {date}
-                  </div>
-                  <div className="mt-2 space-y-5">
-                    {dailySchedule[date].map((time) => (
-                        <div key={time} className={`text-xs text-gray-500 font-semibold ${date === 26 && time === '09:00' ? 'bg-indigo-800 text-white ml-2 mr-2 p-1 mb-0 mt-0 rounded-lg' : date==31 ?'text-grey-100':'p-1'}`}>
-                        {time}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            {appointments.map((apt, i) => (
-              <div
-                key={i}
-                className={`p-4 rounded-lg ${apt.bgColor} ${apt.textColor}`}
-              >
-                <div className="flex items-center gap-3 mb-2">    
-                              
-                  <div>
-                    <div className="font-semibold">{apt.title}</div>
-                    <div className="text-sm opacity-80">{apt.time}</div>
-                    <div className="text-sm opacity-80">{apt.doctor}</div>
-                  </div>
-                  <span className="text-xl mb-10">{apt.icon}</span>
-                </div>
-               
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">The Upcoming Schedule</h3>
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-gray-400 mb-2">On Thursday</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-indigo-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <span className='font-bold'>Health checkup complete</span>
-                      <span>💉</span>
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1 font-semibold">11:00 AM</div>
-                  </div>
-                  <div className="p-4 bg-indigo-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <span className='font-bold'>Ophthalmologist</span>
-                      <span>👁️</span>
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1 font-semibold">14:00 PM</div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-gray-400 mb-2">On Saturday</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-indigo-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <span className='font-bold'>Cardiologist</span>
-                      <span>❤️</span>
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1 font-semibold">12:00 PM</div>
-                  </div>
-                  <div className="p-4 bg-indigo-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <span className='font-bold'>Neurologist</span>
-                      <span>👨🏼‍⚕️</span>
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1 font-semibold">16:00 PM</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <UpcomingSchedule />
         </div>
       </div>
     </div>
